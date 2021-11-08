@@ -1,6 +1,12 @@
 #include <iostream>
 
-#define AUFGABE4
+template <class X, std::size_t Y>
+constexpr std::size_t length(const X (&array)[Y]) noexcept
+{
+    return Y;
+}
+
+#define AUFGABE1
 
 #ifdef AUFGABE1
 
@@ -30,7 +36,8 @@ int main() {
 // Der Nutzer gibt 2 Zahlen ein. Die eine wird durch die andere geteilt. Die Division durch 0 soll abgefangen werden.
 #ifdef AUFGABE2
 int main(){
-    int numberA, numberB;
+    double numberA, numberB;
+
     std::cout << "Enter two numbers - Number A will be divided by Number B" << std::endl;
     std::cout << "NumberA : ";
     std::cin >> numberA;
@@ -39,6 +46,22 @@ int main(){
 
     double result = numberA  / numberB;
     std::cout << numberA << "/" << numberB << " = " << result << std::endl;
+
+    return 0;
+}
+
+#endif
+
+#ifdef AUFGABE2b
+// Es soll ein Array erstellt wernde, der Nutzer gibt die Länge des Arrays for.
+// Was passiert wenn der Nutzer eine Fasche eingabe tätigt.
+int main(){
+
+    int len;
+    std::cout << "Please enter the length of array: ";
+    std::cin >> len;
+
+    int *numbers = new int[len];
 
     return 0;
 }
@@ -81,13 +104,13 @@ int main(){
 
 #ifdef AUFGABE4
 char getChar(){
-    char c;
+    std::string c;
     std::cout << "Character: ";
-    std::cin >> c;
-    if(c == ' '){
+    getline(std::cin, c, '\n');
+    if(c[0] == ' '){
         return NULL;
     }else{
-        return c;
+        return c[0];
     }
 }
 
@@ -101,11 +124,11 @@ int main(){
         if(c == NULL){
             std::cout << "Not a char!" << std::endl;
         }else if(c == '$'){
-            std::cout << "You word ist: " << word << std::endl;
+            std::cout << "Your word ist: " << word << std::endl;
             break;
         }
         else{
-            if(word.length() <= 5) {
+            if(word.length() < 5) {
                 word += c;
             }else{
                 std::cout << "Word is to long" << std::endl;
@@ -119,4 +142,28 @@ int main(){
 
 // Was wenn der Nutzer 2 Zeichen eingibt.
 
+#endif
+
+#ifdef AUFGABE5
+// Für Aufgabe 1 soll eine eigene Exception class implementiert werden die folgendes ausgibt:
+// <eingabe> is not a digit!
+
+int main() {
+    try {
+        char ziffer;
+        std::cout << "Bitte geben Sie eine Ziffer ein: ";
+        std::cin >> ziffer;
+
+        if(!std::isdigit(ziffer)){
+            throw std::domain_error("Is not a digit");
+        }else{
+            std::cout << "Gut gemacht!" << std::endl;
+        }
+    }
+    catch (std::domain_error e) {
+        std::cout << e.what();
+
+    }
+    return 0;
+}
 #endif
